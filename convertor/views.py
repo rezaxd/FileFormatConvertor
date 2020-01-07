@@ -30,7 +30,7 @@ def step1(request):
             error = "'Max File Size': your file is bigger that 100Mg pls split your file into <=100Mg parts!"
             return render(request, "convertor/step1.html", {'error': error})
         upload.size = uploadedfile.size
-        out_format = ["png", "bmp"] if uploadedfile.name.split('.')[1] == "jpg" else ["mp3", "mpeg"]
+        out_format = ["png", "png(more format in future!)"] if uploadedfile.name.split('.')[1] == "jpg" else ["mp3", "mpeg"]
         upload.save()
         m1, m2 = "media/%s"%uploadedfile.name.replace(' ', '_'), "media/%s"%(uploadedfile.name.replace(' ', '-')).replace('_','-')
         subprocess.call(['mv', m1, m2])
@@ -43,7 +43,7 @@ def step2(request):
         _f = uploadedFile.objects.get(pk=request.POST['tid'])
         inf = ''
         result = {}
-        file_type = request.POST['fileFormat']
+        file_type = 'png'
         file_name = (request.POST['fileName'].replace(' ', '-')).replace('_', '-')
         file_path = "%s/%s"%(os.path.join(settings.BASE_DIR, "media"), file_name)
         out_name = "%s.%s"%(file_name.split(".")[0], file_type)
