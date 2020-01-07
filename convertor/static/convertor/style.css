@@ -1,0 +1,42 @@
+*, ::before, ::after{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'ubuntu';
+    src: url('Ubuntu-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'ubuntu-light';
+    src: url('Ubuntu-Light.ttf') format('truetype');
+}
+
+html{
+    font-size: 16px;
+    font-family: 'ubuntu', 'Lacquer', sans-serif;
+    background-color: #222831;
+    color: white;
+    text-align: center;
+}
+
+body{
+    margin: 10vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 5px auto;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+p {
+    margin: 1rem 0;
+}
+
+td, th {
+    padding: 10px;
+}

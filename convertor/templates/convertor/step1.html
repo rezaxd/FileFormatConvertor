@@ -1,0 +1,15 @@
+{% extends './base.html' %}
+
+{% block main %}
+{% if error %}
+    <h5 style="width:max-content;background:#db3056;margin:5px auto;padding:6px;border:#db3056 solid 2px;border-radius:3px;">{{ error }}</h5><br><br>
+{% endif %}
+<form action="{% url 'convertor:step1' %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <label for="file_up">Upload ur file here(Max size: 100MG): </label>
+    <input type='hidden' name='tid' value='{{ tid }}'>
+    <input type="file" name="file_up"><br><br>
+    <input type="submit" value="Submit!">
+</form>
+<br><a href="{% url 'convertor:step3' %}">see list!</a><br>
+{% endblock %}

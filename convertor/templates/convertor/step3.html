@@ -1,0 +1,41 @@
+{% extends './base.html' %}
+
+{% block main %}
+<div style="width:100%;">
+<table style="margin: 5px auto;">
+<thead>
+<tr>
+    <th>input file name</th>
+    <th>output file name</th>
+    <th>status</th>
+    <th>Download or Cancel!</th>
+</tr>
+</thead>
+{% if content %}
+    {% for c in content %}
+    <tr>
+        <td>{{ c.ifile_name }}</td>
+        <td>{{ c.ofile_name }}</td>
+        {% if c.state == "PENDING" %}
+        <td  style="background:#ffba5a;border:#ffba5a solid 2px;border-radius:3px;font-weight:bold;">{{ c.state }}</td>
+        <td><a href="{% url 'convertor:delete' c.task_id %}"><button>Cancel job!</button></a></td>
+        {% elif c.state == "REVOKED" %}
+        <td  style="background:#db3056;border:#db3056 solid 2px;border-radius:3px;font-weight:bold;">{{ c.state }}</td>
+        <td><button style="pointer-events: none;cursor:not-allowed;">Canceled!</button></td>
+        {% elif c.state == "FAILURE" %}
+        <td  style="background:#9d2503;border:#9d2503 solid 2px;border-radius:3px;font-weight:bold;">{{ c.state }}</td>
+        <td><button style="pointer-events: none;cursor:not-allowed;">Try later!</button></td>
+        {% elif c.state == "RETRY" %}
+        <td  style="background:#5f6caf;border:#5f6caf solid 2px;border-radius:3px;font-weight:bold;">{{ c.state }}</td>
+        <td><button style="pointer-events: none;cursor:not-allowed;">Trynig!</button></td>
+        {% else %}
+        <td  style="background:#52de97;border:#52de97 solid 2px;border-radius:3px;font-weight:bold;">{{ c.state }}</td>
+        <td><a href="{{ c.d_url }}"><button>Download!</button></a></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+{% endif %}
+</table>
+</div><hr><br>
+<div><a href="{% url 'convertor:step1' %}"><button>Main page!</button></a></div>
+{% endblock main %}

@@ -1,0 +1,21 @@
+{% extends './base.html' %}
+{% comment %} <a href="{% url 'convertor:cancel_job' task_id=task_id %}"> {% endcomment %}
+{% block main %}
+{% if content %}
+    <h5>{{ content.name }}</h5>
+    <h5>{{ content.size|filesizeformat }}</h5>
+    {% comment %} {% for job_name, state, progress, task_id in info %} {% endcomment %}
+{% endif %}
+<form action='{% url "convertor:step2" %}' method="POST">
+{% csrf_token %}
+    <input type='hidden' name='fileName' value='{{ content.name }}'>
+    <input type='hidden' name='tid' value='{{ tid }}'>
+    available formats: 
+    <select name="fileFormat">
+    {% for c in choices %}
+            <option value="{{ c }}">{{ c }}</option>
+    {% endfor %}
+    </select>
+    <input type="submit" value="Convert!">
+</form>
+{% endblock %}
