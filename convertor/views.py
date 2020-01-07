@@ -42,7 +42,6 @@ def step2(request):
     if request.method == 'POST':
         _f = uploadedFile.objects.get(pk=request.POST['tid'])
         inf = ''
-        result = {}
         file_type = 'png'
         file_name = (request.POST['fileName'].replace(' ', '-')).replace('_', '-')
         file_path = "%s/%s"%(os.path.join(settings.BASE_DIR, "media"), file_name)
