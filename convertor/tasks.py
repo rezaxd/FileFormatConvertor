@@ -1,19 +1,20 @@
 from __future__ import absolute_import, unicode_literals
-from celery import shared_task, Celery
-from django.conf import settings
+from celery import shared_task
 from .models import uploadedFile
 from django.core.files import File
-import time
-import os
 import subprocess
 
-def saver(pk, name):
-    o_db_f = uploadedFile.objects.get(pk=pk)
+def outputFileSaver(pk, name):
+    # In this function we'll open output file from covert operation and store it into outputFile in db
+    # this function wont run as celery task
+    dbRecordToStoreOutpuFile = uploadedFile.objects.get(pk=pk)
     with open(name, 'rb') as f:
-        o_db_f.ofile.save(name, File(f, name=name))
+        dbRecordToStoreOutpuFile.outputFile.save(name, File(f, name=name))
 
 @shared_task(bind=True)
-def deleter(self, tid):
+def taskDeleter(self, tid):
+    # This function will revoke or cancel celery task, if any problem occur it'll try 5 times more
+    # This function will run as celery task
     try:
         from celery.result import AsyncResult
         AsyncResult(tid).revoke(terminate=True)
@@ -21,21 +22,29 @@ def deleter(self, tid):
         raise self.retry(exe = exe, max_retries=5)
 
 @shared_task(bind=True)
-def imgConvertFunc(self, image_path, name, pk):
+def imageConvertorFunction(self, image_path, name, pk):
+    # Function that Converts file from jpg into png or bmp
+    # This function will run as celery task
     try:
         from PIL import Image
         Image.open(image_path).save(name)
-        saver(pk, name)
+        outputFileSaver(pk, name)
     except Exception as exe:
         raise self.retry(exe = exe, max_retries=5)
+
+    # after calling outputFileSaver we'll delete temp file that convert operation created!
     subprocess.call(['rm', '-r', name])
 
 @shared_task(bind=True)
-def musicConvertFucn(self, video_path, name, out_format, pk):
+def videoConvertorFunction(self, video_path, name, out_format, pk):
+    # Function that converts file from mp4 to mp3 or mpeg!
+    # This function will run as celery task
     try:
         from pydub import AudioSegment
         AudioSegment.from_file(video_path).export(name, format=out_format)
-        saver(pk, name)
+        outputFileSaver(pk, name)
     except Exception as exe:
         raise self.retry(exe = exe, max_retries=5)
+
+    # after calling outputFileSaver we'll delete temp file that convert operation created!
     subprocess.call(['rm', '-r', name])

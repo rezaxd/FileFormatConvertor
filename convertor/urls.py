@@ -9,7 +9,7 @@ urlpatterns = [
     path('', views.step1, name='step1'),
     path('convert/', views.step2, name='step2'),
     path('convert-list/', views.step3, name='step3'),
-    path('delete/<str:tid>/', views.delete, name='delete'),
+    path('delete/<str:task_id>/', views.delete, name='delete'),
 ]
 
 if settings.DEBUG:

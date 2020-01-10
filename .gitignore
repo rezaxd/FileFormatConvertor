@@ -1,2 +1,5 @@
 db.sqlite3
 .vscode/
+convertor/__pycache__
+FileFormatConvertor/__pycache__
+convertor/migrations
