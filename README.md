@@ -2,6 +2,6 @@
 ### more formats in future :D
 
 ### Dependencies:
-apt-get install ffmpeg libavcodec-extra
+apt-get install ffmpeg libavcodec-extra rabbitmq-server python-celery-common
 
 pip install -r requirements.txt
