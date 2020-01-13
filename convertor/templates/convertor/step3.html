@@ -29,7 +29,7 @@
         <td><button style="pointer-events: none;cursor:not-allowed;">Trynig!</button></td>
         {% else %}
         <td  style="background:#52de97;border:#52de97 solid 2px;border-radius:3px;font-weight:bold;">{{ c.taskState }}</td>
-        <td><a href="{{ c.downloadUrl }}"><button>Download!</button></a></td>
+        <td><a href="{{ c.downloadUrl }}" download><button>Download!</button></a></td>
         {% endif %}
     </tr>
     {% endfor %}

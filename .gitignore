@@ -3,3 +3,4 @@ db.sqlite3
 convertor/__pycache__
 FileFormatConvertor/__pycache__
 convertor/migrations
+.env

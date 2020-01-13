@@ -10,7 +10,7 @@
     {% csrf_token %}
     <div class="center">
 		<div class="title">Upload ur file here(Max size: 100MG): </div>
-        <input type="file" name="file_up" class="input">
+        <input type="file" name="file_up" class="input" accept=".jpg,.mp4" required>
         <input class="submit-btn" type="submit" value="Submit!">
         <a href="{% url 'convertor:step3' %}"><div class="list-btn">see list!</div></a>
     </div>

@@ -19,8 +19,6 @@ def step1(request):
     if request.method == 'POST':
         # Create new uploadedFile model instance to save information in db!
         upload = uploadedFile()
-
-        # Set added date:
         upload.addedDate = timezone.now()
 
         # Store uploaded file from form into uploadedFileFromForm var, and into inputfile in model(db)
@@ -48,7 +46,7 @@ def step1(request):
         if errors:            
             return render(request, "convertor/step1.html", {'error': errors})
     
-        # Creating a list with available choice for fromat operation
+        # Creating a list with available choice for format operation
         # if the format of uploadedFileFromForm(or uploaded file) be 'jpg', ['png', 'bmp'] will return as availabe formats in template!
         # else it'll return ['mp3', 'mpeg'] for 'mp4' uploaded file format! so simple!
         out_format = ["png", "bmp"] if uploadedFileFromForm.name.split('.')[1] == "jpg" else ["mp3", "mpeg"]
