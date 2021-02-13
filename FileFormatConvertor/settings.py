@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'FileFormatConvertor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('ENGINE'),
-        'NAME': os.path.join(BASE_DIR, os.getenv('NAME')),
+        'NAME': os.path.join(BASE_DIR, os.getenv('NAME', "name")),
         'USER': os.getenv('USER'),
         'PASSWORD': os.getenv('PASSWORD'),
         'HOST': os.getenv('HOST'),
